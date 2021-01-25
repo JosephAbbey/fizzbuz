@@ -1,2 +1,2 @@
-# fizzbuz
-Fizzbuz in almost every language.
+# Fizzbuz
+Aiming to make fizzbuz in almost every language.

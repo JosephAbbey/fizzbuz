@@ -1,0 +1,36 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>python</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.0/brython.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.0/brython_stdlib.min.js"></script>
+		<link rel="stylesheet" href="./prism.css" />
+	</head>
+	<body
+		onload="brython()"
+		class="line-numbers highlight-keywords match-braces"
+		data-download-link
+	>
+		<pre data-src="./fizzbuz.py" class="language-python"><code></code></pre>
+		<pre id="console" class="language-xxxx">
+Python output from Brython: <br></pre>
+		<script type="text/javascript" src="./prism.js"></script>
+		<script type="text/javascript">
+			console.log = function (str) {
+				var console = document.getElementById('console');
+				str = str
+					.toString()
+					.replace(/</g, '&lt;')
+					.replace(/>/g, '&gt;')
+					.replace(/\r/g, '')
+					.replace(/\n/g, '');
+				var out = document.createElement('text');
+				out.innerText = str;
+				console.appendChild(out);
+				console.appendChild(document.createElement('br'));
+			};
+		</script>
+		<script type="text/python" src="./fizzbuz.py"></script>
+	</body>
+</html>

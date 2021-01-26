@@ -10,6 +10,5 @@ for i in (1..n).to_a do
   if o == ""
     o = i
   end
-  print(o)
-  print("\n")
+  print(o, "\n")
 end

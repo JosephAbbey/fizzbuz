@@ -8,7 +8,7 @@ public static class Program {
       string o = "";
       if (i % 3 == 0) { o += "fizz"; }
       if (i % 5 == 0) { o += "buzz"; }
-      if (i % 3 == 0) { o = (string)i; }
+      if (o == "") { o = i.ToString(); }
       Console.WriteLine(o);
     }
   }

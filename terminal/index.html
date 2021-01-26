@@ -8,21 +8,41 @@
 		<link rel="stylesheet" href="../styles/prism.css" />
 	</head>
 	<body>
-		<pre id="console" class="language-xxxx"></pre>
+		<input
+			type="text"
+			onchange="document.getElementById('bscript').innerHTML +=
+		'\n' + this.value;document.getElementById('console').appendChild(document.createTextNode(
+		'>>> ' + this.value + '\n'));
+		document.getElementById('console').appendChild(document.createElement('br'));
+		out = document.createElement('text'); brython();
+		document.getElementById('console').appendChild(out);
+		document.getElementById('console').appendChild(document.createElement('br'));
+		this.value = ''"
+		/>
+		<script type="text/python" id="bscript"></script>
+		<pre id="console" class="language-python"></pre>
 		<script type="text/javascript">
+			const print = console.log;
 			console.log = function (str) {
-				var console = document.getElementById('console');
+				print(str);
+				str = str
+					.toString()
+					.replace(/</g, '&lt;')
+					.replace(/>/g, '&gt;')
+					.replace(/\r/g, '');
+				out.innerText = str;
+			};
+
+			console.error = function (str) {
 				str = str
 					.toString()
 					.replace(/</g, '&lt;')
 					.replace(/>/g, '&gt;')
 					.replace(/\r/g, '')
 					.replace(/\n/g, '');
-				var out = document.createElement('text');
-				out.innerText = str;
-				console.appendChild(out);
-				console.appendChild(document.createElement('br'));
+				out.innerHTML = '<span style="color: red">' + str + '</span>';
 			};
 		</script>
+		<script type="text/javascript" src="../src/prism.js"></script>
 	</body>
 </html>

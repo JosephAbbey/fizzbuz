@@ -5,17 +5,20 @@
 		<title>python</title>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.0/brython.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.0/brython_stdlib.min.js"></script>
-		<link rel="stylesheet" href="./prism.css" />
+		<link rel="stylesheet" href="./styles/prism.css" />
 	</head>
 	<body
 		onload="brython()"
 		class="line-numbers highlight-keywords match-braces"
 		data-download-link
 	>
-		<pre data-src="./fizzbuzz.py" class="language-python"><code></code></pre>
+		<pre
+			data-src="./fizzbuzzes/fizzbuzz.py"
+			class="language-python"
+		><code></code></pre>
 		<pre id="console" class="language-xxxx">
 Python output from Brython: <br></pre>
-		<script type="text/javascript" src="./prism.js"></script>
+		<script type="text/javascript" src="./src/prism.js"></script>
 		<script type="text/javascript">
 			console.log = function (str) {
 				var console = document.getElementById('console');
@@ -31,6 +34,6 @@ Python output from Brython: <br></pre>
 				console.appendChild(document.createElement('br'));
 			};
 		</script>
-		<script type="text/python" src="./fizzbuzz.py"></script>
+		<script type="text/python" src="./fizzbuzzes/fizzbuzz.py"></script>
 	</body>
 </html>

@@ -3,18 +3,21 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>javascript</title>
-		<link rel="stylesheet" href="./prism.css" />
+		<link rel="stylesheet" href="./styles/prism.css" />
 	</head>
 	<body
 		class="line-numbers highlight-keywords match-braces"
 		data-download-link
 	>
-		<pre data-src="./fizzbuzz.js" class="language-js"><code></code></pre>
+		<pre
+			data-src="./fizzbuzzes/fizzbuzz.js"
+			class="language-js"
+		><code></code></pre>
 		<pre
 			id="console"
 			class="language-xxxx"
 		>JS output from Client-side JS: <br></pre>
-		<script type="text/javascript" src="./prism.js"></script>
+		<script type="text/javascript" src="./src/prism.js"></script>
 		<script type="text/javascript">
 			console.log = function (str) {
 				var console = document.getElementById('console');
@@ -30,6 +33,6 @@
 				console.appendChild(document.createElement('br'));
 			};
 		</script>
-		<script type="text/javascript" src="./fizzbuzz.js"></script>
+		<script type="text/javascript" src="./fizzbuzzes/fizzbuzz.js"></script>
 	</body>
 </html>

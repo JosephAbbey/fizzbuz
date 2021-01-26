@@ -1,16 +1,15 @@
 n = 100
-
 for i in (1..n).to_a do
+  o = ""
   if i % 3 == 0
-    if i % 5 == 0
-      print("fizzbuz\n")
-    else
-      print("fizz\n")
-    end
-  else if i % 5 == 0
-    print("buzz\n")
-  else
-    print(i, "\n")
+    o += "fizz"
   end
-end
+  if i % 5 == 0
+    o += "buzz"
+  end
+  if o == ""
+    o = i
+  end
+  print(o)
+  print("\n")
 end

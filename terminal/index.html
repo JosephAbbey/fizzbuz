@@ -8,19 +8,30 @@
 		<link rel="stylesheet" href="../styles/prism.css" />
 	</head>
 	<body>
-		<input
+		<pre
+			class="language-python"
+			style="height: 400px; cursor: text"
+			onclick="this.getElementsByTagName('input')[0].focus()"
+		><text
+			id="console">>>> </text><input
 			type="text"
+			style="
+				border: 0px;
+				outline: none;
+				background-color: #f5f2f0;
+				width: auto;
+			"
 			onchange="document.getElementById('bscript').innerHTML +=
 		'\n' + this.value;document.getElementById('console').appendChild(document.createTextNode(
-		'>>> ' + this.value + '\n'));
+		this.value));
 		document.getElementById('console').appendChild(document.createElement('br'));
 		out = document.createElement('text'); brython();
 		document.getElementById('console').appendChild(out);
-		document.getElementById('console').appendChild(document.createElement('br'));
-		this.value = ''"
-		/>
-		<script type="text/python" id="bscript"></script>
-		<pre id="console" class="language-python"></pre>
+		document.getElementById('console').appendChild(document.createTextNode('>>> '));
+		this.value = ''
+		document.getElementById('console').scrollTop = document.getElementById('console').scrollHeight;"
+		/></pre>
+
 		<script type="text/javascript">
 			const print = console.log;
 			console.log = function (str) {
@@ -44,5 +55,7 @@
 			};
 		</script>
 		<script type="text/javascript" src="../src/prism.js"></script>
+
+		<script type="text/python" id="bscript"></script>
 	</body>
 </html>

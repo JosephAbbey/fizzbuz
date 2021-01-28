@@ -49,7 +49,9 @@
 				document
 					.getElementById('console')
 					.appendChild(document.createElement('br'));
-				brython();
+				try {
+					brython();
+				} catch (err) {}
 
 				setTimeout(printLog, 40);
 			}
@@ -66,9 +68,6 @@
 						'">' +
 						logs[logs.length - 1][i].str +
 						'</span>';
-					if (logs[logs.length - 1][i].type == 'error') {
-						document.getElementById('console').innerHTML += '\n';
-					}
 				}
 
 				document
@@ -88,7 +87,13 @@
 					.replace(/</g, '&lt;')
 					.replace(/>/g, '&gt;')
 					.replace(/\r/g, '');
-				logs[logs.length - 1].push({ str, type: 'log' });
+				try {
+					logs[logs.length - 1].push({
+						str,
+						type:
+							str.substring(0, 7) == 'Error: ' ? 'error' : 'log',
+					});
+				} catch (err) {}
 			};
 			console.error = function (str) {
 				print(str);
@@ -97,7 +102,9 @@
 					.replace(/</g, '&lt;')
 					.replace(/>/g, '&gt;')
 					.replace(/\r/g, '');
-				logs[logs.length - 1].push({ str, type: 'error' });
+				try {
+					logs[logs.length - 1].push({ str, type: 'error' });
+				} catch (err) {}
 			};
 
 			document.getElementsByTagName('input')[0].onkeydown = function (
@@ -123,7 +130,9 @@
 
 				if (event.keyCode == 13) {
 					document.getElementById('bscript').innerHTML +=
-						'\n' + event.srcElement.value;
+						'\ntry:\n  ' +
+						event.srcElement.value +
+						'\nexcept Exception as e:\n  print("Error: " + str(e))';
 					getLog(event.srcElement);
 					event.srcElement.value = '';
 				}

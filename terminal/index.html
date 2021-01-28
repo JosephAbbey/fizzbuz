@@ -66,8 +66,10 @@
 						'">' +
 						logs[logs.length - 1][i].str +
 						'</span>';
+					if (logs[logs.length - 1][i].type == 'error') {
+						document.getElementById('console').innerHTML += '\n';
+					}
 				}
-				document.getElementById('console').innerHTML += '\n';
 
 				document
 					.getElementById('console')

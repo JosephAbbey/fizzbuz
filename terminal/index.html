@@ -5,12 +5,21 @@
 		<title>terminal</title>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.0/brython.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.0/brython_stdlib.min.js"></script>
-		<link rel="stylesheet" href="../styles/prism.css" />
+		<style>
+			#console .error {
+				color: red;
+			}
+		</style>
 	</head>
+
 	<body>
 		<pre
-			class="language-python"
-			style="height: 400px; cursor: text"
+			style="
+				height: 400px;
+				cursor: text;
+				background-color: #f5f2f0;
+				padding: 1em;
+			"
 			onclick="this.getElementsByTagName('input')[0].focus()"
 		><text
 			id="console">>>> </text><input
@@ -19,21 +28,57 @@
 				border: 0px;
 				outline: none;
 				background-color: #f5f2f0;
-				width: auto;
+                font-size: inherit;
+                font: inherit;
+				margin: 0px;
+				padding: 0px;
 			"
-			onchange="document.getElementById('bscript').innerHTML +=
-		'\n' + this.value;document.getElementById('console').appendChild(document.createTextNode(
-		this.value));
-		document.getElementById('console').appendChild(document.createElement('br'));
-		out = document.createElement('text'); brython();
-		document.getElementById('console').appendChild(out);
-		document.getElementById('console').appendChild(document.createTextNode('>>> '));
-		this.value = ''
-		document.getElementById('console').scrollTop = document.getElementById('console').scrollHeight;"
+			oninput="try {this.size = this.value.length} catch {}"
+			autofocus
 		/></pre>
 
 		<script type="text/javascript">
+			let compos = 0;
+			const logs = [];
+			const commands = [];
+
+			function getLog(self) {
+				commands.push(self.value);
+				logs.push([]);
+				document.getElementById('console').innerHTML += self.value;
+				document
+					.getElementById('console')
+					.appendChild(document.createElement('br'));
+				brython();
+
+				setTimeout(printLog, 40);
+			}
+
+			function printLog() {
+				var start = 0;
+				if (logs[logs.length - 2]) {
+					start = logs[logs.length - 2].length;
+				}
+				for (var i = start; i < logs[logs.length - 1].length; i++) {
+					document.getElementById('console').innerHTML +=
+						'<span class="' +
+						logs[logs.length - 1][i].type +
+						'">' +
+						logs[logs.length - 1][i].str +
+						'</span>';
+				}
+				document.getElementById('console').innerHTML += '\n';
+
+				document
+					.getElementById('console')
+					.appendChild(document.createTextNode('>>> '));
+				document.getElementById(
+					'console'
+				).scrollTop = document.getElementById('console').scrollHeight;
+			}
+
 			const print = console.log;
+			const printErr = console.error;
 			console.log = function (str) {
 				print(str);
 				str = str
@@ -41,21 +86,47 @@
 					.replace(/</g, '&lt;')
 					.replace(/>/g, '&gt;')
 					.replace(/\r/g, '');
-				out.innerText = str;
+				logs[logs.length - 1].push({ str, type: 'log' });
 			};
-
 			console.error = function (str) {
+				print(str);
 				str = str
 					.toString()
 					.replace(/</g, '&lt;')
 					.replace(/>/g, '&gt;')
-					.replace(/\r/g, '')
-					.replace(/\n/g, '');
-				out.innerHTML = '<span style="color: red">' + str + '</span>';
+					.replace(/\r/g, '');
+				logs[logs.length - 1].push({ str, type: 'error' });
+			};
+
+			document.getElementsByTagName('input')[0].onkeydown = function (
+				event
+			) {
+				if (event.keyCode == 38) {
+					if (commands[commands.length - compos - 1]) {
+						compos++;
+						document.getElementsByTagName('input')[0].value =
+							commands[commands.length - compos];
+					}
+				}
+
+				if (event.keyCode == 40) {
+					if (commands[commands.length - compos]) {
+						compos--;
+						document.getElementsByTagName('input')[0].value =
+							commands[commands.length - compos - 1];
+					} else {
+						document.getElementsByTagName('input')[0].value = '';
+					}
+				}
+
+				if (event.keyCode == 13) {
+					document.getElementById('bscript').innerHTML +=
+						'\n' + event.srcElement.value;
+					getLog(event.srcElement);
+					event.srcElement.value = '';
+				}
 			};
 		</script>
-		<script type="text/javascript" src="../src/prism.js"></script>
-
 		<script type="text/python" id="bscript"></script>
 	</body>
 </html>
